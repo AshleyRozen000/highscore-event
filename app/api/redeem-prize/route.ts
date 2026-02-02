@@ -1,11 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
+// List of mock codes to intercept
+const MOCK_CODE_KEYS = ['HS-DRN-TEST1', 'HS-V05-TEST2', 'HS-USED-CODE'];
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { code, firstName, lastName, email, address, city, zip, country, phone } = body;
 
+    // 1. Intercept Mock Codes
+    if (MOCK_CODE_KEYS.includes(code)) {
+      console.log('Mock Redemption Request (Skipping DB insert):', body);
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return NextResponse.json({ success: true, isMock: true });
+    }
+
+    // 2. Real Database Insertion
     const { error } = await supabase
       .from('redemptions')
       .insert([
