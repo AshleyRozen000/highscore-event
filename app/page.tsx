@@ -1,65 +1,147 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Home() {
+  const [code, setCode] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/verify-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code.trim().toUpperCase() }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      sessionStorage.setItem('prize_data', JSON.stringify(data.prize));
+
+      if (data.prize.category === 'VOUCHER') {
+        router.push('/result?type=voucher');
+      } else {
+        router.push('/redeem');
+      }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    // Main container with fallback background color matching the bottom section
+    <main className="min-h-screen flex flex-col items-center overflow-x-hidden font-sans bg-[#CDE4FF]">
+      
+      {/* 1. TOP SECTION: 首页.png */}
+      <div className="relative w-full z-0">
+        <Image 
+           src="/new-ui-assets/首页.png" 
+           alt="Event Banner" 
+           width={1920} 
+           height={1080}
+           className="w-full h-auto block" // block removes bottom spacing
+           priority
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+      </div>
+
+      {/* 2. BOTTOM SECTION Container: Includes Middle Strip + Content + Background */}
+      {/* -mt-[6%] creates a stronger overlap effect to cover the top banner slightly more. */}
+      <div className="relative w-full z-10 -mt-1 flex flex-col items-center">
+        
+        {/* Background Image: 背景色.png */}
+        {/* Placed absolute to cover the entire bottom section */}
+        <div className="absolute inset-0 z-0">
+             <Image 
+                src="/new-ui-assets/背景色.png" 
+                alt="Background Texture" 
+                fill 
+                className="object-cover"
+                quality={100}
+             />
+        </div>
+
+        {/* 2.1 MIDDLE: 斜面.png (The Slope Strip) */}
+        {/* Placed at the top of the bottom section, above the background */}
+        <div className="relative w-full z-10">
+           <Image 
+              src="/new-ui-assets/斜面.png" 
+              alt="Power Up Strip" 
+              width={1920} 
+              height={100} 
+              className="w-full h-auto object-cover block -mt-10 sm:-mt-16 md:-mt-20 lg:-mt-24" // Responsive negative margin to eat up whitespace
+           />
+        </div>
+
+        {/* 2.2 CONTENT: Logo & Form */}
+        <div className="relative w-full z-10 flex flex-col items-center pt-8 pb-20">
+          
+          {/* Title Logo */}
+          <div className="w-[80%] max-w-lg mb-8 animate-bounce-slow">
+               <Image 
+                  src="/new-ui-assets/主题.png" 
+                  alt="Scratch Your High Score" 
+                  width={600} 
+                  height={200} 
+                  className="w-full h-auto"
+               />
+          </div>
+
+          {/* Input Card Container */}
+          <div className="glass-card w-[90%] max-w-md rounded-[30px] p-8 md:p-10 text-center relative overflow-hidden">
+            
+            <h2 className="text-[#0056D2] text-2xl font-bold mb-2">Claim Your Prize</h2>
+            <p className="text-[#5A8BBF] text-xs md:text-sm mb-8 px-4">
+              Enter the unique code found on your scratch card to unlock your reward.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="relative">
+                <input
+                  type="text"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="ENTER CODE (E.G. HS-XXX-XXXXX)"
+                  className="w-full bg-[#D6E8FF]/60 border border-[#FFF] text-center text-[#0056D2] font-bold text-lg tracking-widest py-4 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007AFF] focus:bg-[#D6E8FF] placeholder:text-[#8BADCF] placeholder:font-normal placeholder:text-sm transition-all uppercase"
+                  required
+                />
+              </div>
+
+              {error && (
+                <div className="text-red-500 text-sm bg-red-100 py-2 px-4 rounded-lg border border-red-200 animate-pulse">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary w-full bg-[#0056D2] text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'UNLOCKING...' : 'UNLOCK REWARD'}
+              </button>
+            </form>
+          </div>
+
+          {/* Footer Text */}
+          <p className="mt-12 text-[#5A8BBF] text-xs">
+            &copy; 2026 Highscore. All rights reserved.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

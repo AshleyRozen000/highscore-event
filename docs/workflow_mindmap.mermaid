@@ -1,0 +1,40 @@
+graph TD
+    subgraph 线下物理世界
+    A[用户刮开卡片] --> B{是否有编码?}
+    B -- 无编码 --> C[安慰奖: Better Luck Next Time]
+    B -- 有编码 --> D[扫码进入官网]
+    C --> D
+    end
+
+    subgraph 线上数字化系统 [Next.js + Supabase]
+    D --> E[活动落地页]
+    E --> F{输入兑奖码}
+    
+    F -- 无码可输 --> G[页面提示: 无码即为参与奖]
+    G --> H[流程结束]
+
+    F -- 输入编码 --> I[防伪验证 API]
+    
+    subgraph 验证逻辑
+    I --> J{校验数据库}
+    J -- 码不存在 --> K[报错: Invalid Code]
+    J -- 码已使用 --> L[报错: Code Redeemed]
+    J -- 验证通过 --> M[解锁兑奖表单]
+    end
+
+    M --> N[填写收货信息]
+    N --> O[包含: Name, Email(必填), Address, Phone]
+    O --> P[提交数据]
+    
+    P --> Q[数据库更新状态]
+    Q --> R[Status -> Redeemed]
+    Q --> S[保存用户数据]
+    
+    R --> T[显示兑奖成功页]
+    end
+
+    subgraph 后台管理与发货
+    U[运营人员] --> V[查看 Supabase Dashboard]
+    V --> W[导出中奖数据 Excel]
+    W --> X[安排发货/发送优惠券]
+    end
