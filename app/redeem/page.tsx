@@ -53,6 +53,15 @@ export default function RedeemPage() {
     }
   };
 
+  const handleInvalid = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    (e.target as HTMLInputElement).setCustomValidity('Please fill out this field.');
+  };
+
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    (e.target as HTMLInputElement).setCustomValidity('');
+  };
+
   if (!prize) return null;
 
   return (
@@ -120,42 +129,42 @@ export default function RedeemPage() {
                 <form onSubmit={handleSubmit} className="space-y-5 text-left">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="space-y-1">
-                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">First Name</label>
-                            <input required name="firstName" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="John" />
+                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">First Name <span className="text-red-400">*</span></label>
+                            <input required name="firstName" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="John" />
                         </div>
                         <div className="space-y-1">
-                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Last Name</label>
-                            <input required name="lastName" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="Doe" />
+                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Last Name <span className="text-red-400">*</span></label>
+                            <input required name="lastName" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="Doe" />
                         </div>
                     </div>
 
                     <div className="space-y-1">
                         <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Email Address <span className="text-red-400">*</span></label>
-                        <input required type="email" name="email" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="john@example.com" />
+                        <input required type="email" name="email" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="john@example.com" />
                     </div>
 
                     <div className="space-y-1">
-                        <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Phone Number</label>
-                        <input required type="tel" name="phone" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="+1 (555) 000-0000" />
+                        <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Phone Number <span className="text-red-400">*</span></label>
+                        <input required type="tel" name="phone" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="+1 (555) 000-0000" />
                     </div>
 
                     <div className="space-y-1">
-                        <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Shipping Address</label>
-                        <input required name="address" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="123 Main St, Apt 4B" />
+                        <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Shipping Address <span className="text-red-400">*</span></label>
+                        <input required name="address" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" placeholder="123 Main St, Apt 4B" />
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
                         <div className="space-y-1">
-                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">City</label>
-                            <input required name="city" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" />
+                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">City <span className="text-red-400">*</span></label>
+                            <input required name="city" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" />
                         </div>
                         <div className="space-y-1">
-                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Zip Code</label>
-                            <input required name="zip" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" />
+                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Zip Code <span className="text-red-400">*</span></label>
+                            <input required name="zip" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" />
                         </div>
                         <div className="space-y-1 col-span-2 md:col-span-1">
-                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Country</label>
-                            <input required name="country" onChange={handleChange} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" />
+                            <label className="text-xs uppercase text-[#5A8BBF] font-bold tracking-wider ml-1">Country <span className="text-red-400">*</span></label>
+                            <input required name="country" onChange={handleChange} onInvalid={handleInvalid} onInput={handleInput} className="w-full bg-[#D6E8FF]/40 border border-[#FFF] rounded-xl p-3 text-[#0056D2] placeholder-[#8BADCF] focus:border-[#0056D2] focus:outline-none transition-colors" />
                         </div>
                     </div>
 

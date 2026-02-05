@@ -136,8 +136,32 @@ export default function Home() {
             </form>
           </div>
 
+          {/* Rules & Info */}
+          <div className="w-[90%] max-w-2xl mt-12 text-[#5A8BBF] text-xs md:text-sm text-left space-y-6 bg-white/30 backdrop-blur-md p-6 rounded-2xl border border-white/40 shadow-sm">
+              <div>
+                  <h3 className="text-[#0056D2] font-bold mb-2 uppercase tracking-wide">How to Participate:</h3>
+                  <ol className="list-decimal pl-5 space-y-1 marker:text-[#0056D2] marker:font-bold">
+                      <li>Purchase any High Score product at an authorized vape retailer.</li>
+                      <li>Open the box to reveal a mini surprise gift — and a Scratch Card.</li>
+                      <li>Scratch to reveal your prize code, then enter it above to redeem.</li>
+                  </ol>
+              </div>
+
+              <div>
+                  <h3 className="text-[#0056D2] font-bold mb-2 uppercase tracking-wide">Prize Shipping:</h3>
+                  <ul className="list-disc pl-5 space-y-1 marker:text-[#0056D2]">
+                      <li>Physical prizes will be shipped on the 15th of each month.</li>
+                      <li>Make sure to enter accurate shipping information when prompted after code submission.</li>
+                  </ul>
+              </div>
+
+              <p className="italic opacity-80 border-t border-[#5A8BBF]/20 pt-4 mt-2">
+                  * High Score reserves the right to interpret and make final decisions for this promotion.
+              </p>
+          </div>
+
           {/* Footer Text */}
-          <p className="mt-12 text-[#5A8BBF] text-xs">
+          <p className="mt-8 text-[#5A8BBF] text-xs">
             &copy; 2026 Highscore. All rights reserved.
           </p>
         </div>

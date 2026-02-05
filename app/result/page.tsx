@@ -67,7 +67,7 @@ function ResultContent() {
             ) : (
                 <div className="space-y-4">
                     <p className="text-[#5A8BBF] leading-relaxed">
-                        We have received your shipping details. Your prize will be processed and shipped within 5-7 business days.
+                        We have received your shipping details.
                     </p>
                     <div className="bg-green-50 text-green-700 p-4 rounded-xl text-sm border border-green-100">
                         ✓ A confirmation email has been sent to your inbox.
