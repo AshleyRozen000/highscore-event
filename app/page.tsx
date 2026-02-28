@@ -152,6 +152,7 @@ export default function Home() {
                   <ul className="list-disc pl-5 space-y-1 marker:text-[#0056D2]">
                       <li>Physical prizes will be shipped on the 15th of each month.</li>
                       <li>Make sure to enter accurate shipping information when prompted after code submission.</li>
+                      <li>For any questions, feel free to DM us on Instagram <a href="https://www.instagram.com/highscore_vape/" target="_blank" rel="noopener noreferrer" className="text-[#0056D2] font-bold underline hover:text-[#007AFF] transition-colors">@highscore_vape</a>.</li>
                   </ul>
               </div>
 
