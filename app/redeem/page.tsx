@@ -70,7 +70,7 @@ export default function RedeemPage() {
       {/* --- TOP SECTION (Banner) --- */}
       <div className="relative w-full z-0">
         <Image 
-           src="/new-ui-assets/首页.png" 
+           src="/new-ui-assets/highscorevape-event-banner.png" 
            alt="Event Banner" 
            width={1920} 
            height={1080}
