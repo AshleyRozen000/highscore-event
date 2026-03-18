@@ -93,17 +93,6 @@ export default function RedeemPage() {
              />
         </div>
 
-        {/* MIDDLE: 斜面.png */}
-        <div className="relative w-full z-10">
-           <Image 
-              src="/new-ui-assets/斜面.png" 
-              alt="Power Up Strip" 
-              width={1920} 
-              height={100} 
-              className="w-full h-auto object-cover block -mt-10 sm:-mt-16 md:-mt-20 lg:-mt-24"
-           />
-        </div>
-
         {/* CONTENT */}
         <div className="relative w-full z-10 flex flex-col items-center pt-8 pb-20 px-4">
             
